@@ -43,7 +43,7 @@ public class Schedule extends AmireControl{
             myMap.put(i+1,i+2);
             AmireControl.TimerDetails.add(myMap);
         }
-
+//comment
         for(Integer i = 0;i<10;i++){
             Log.d("timer details =" , String.valueOf(TimerDetails.get(i).keySet()));
 
