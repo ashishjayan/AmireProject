@@ -1,4 +1,4 @@
-package com.led.led;
+package com.amire.amire;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -33,11 +33,11 @@ public class DeviceList extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_device_list);
+        setContentView(com.amire.amire.R.layout.activity_device_list);
 
         //Calling widgets
-        btnPaired = (Button)findViewById(R.id.button);
-        devicelist = (ListView)findViewById(R.id.listView);
+        btnPaired = (Button)findViewById(com.amire.amire.R.id.button);
+        devicelist = (ListView)findViewById(com.amire.amire.R.id.listView);
 
         //if the device has bluetooth
         myBluetooth = BluetoothAdapter.getDefaultAdapter();
@@ -61,6 +61,9 @@ public class DeviceList extends ActionBarActivity
             @Override
             public void onClick(View v)
             {
+
+
+
                 pairedDevicesList();
             }
         });
@@ -99,10 +102,10 @@ public class DeviceList extends ActionBarActivity
             String address = info.substring(info.length() - 17);
 
             // Make an intent to start next activity.
-            Intent i = new Intent(DeviceList.this, ledControl.class);
+            Intent i = new Intent(DeviceList.this, AmireControl.class);
 
             //Change the activity.
-            i.putExtra(EXTRA_ADDRESS, address); //this will be received at ledControl (class) Activity
+            i.putExtra(EXTRA_ADDRESS, address); //this will be received at AmireControl (class) Activity
             startActivity(i);
         }
     };
@@ -112,7 +115,7 @@ public class DeviceList extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_device_list, menu);
+        getMenuInflater().inflate(com.amire.amire.R.menu.menu_device_list, menu);
         return true;
     }
 
@@ -124,7 +127,7 @@ public class DeviceList extends ActionBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == com.amire.amire.R.id.action_settings) {
             return true;
         }
 

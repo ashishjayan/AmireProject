@@ -1,4 +1,4 @@
-package com.led.led;
+package com.amire.amire;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,8 +9,6 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -18,14 +16,16 @@ import android.bluetooth.BluetoothDevice;
 import android.os.AsyncTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 
-public class ledControl extends ActionBarActivity {
+public class AmireControl extends ActionBarActivity {
 
-    Button btnOn, btnOff, btnDis;
-    SeekBar brightness;
-    TextView lumn;
+    Button btnDis,btnNorthDoor, btnSouthDoor, btnWestDoor, btnEastDoor,btnSchedule, btnNlight,btnSlight,btnWlight,btnElight;
+    public static ArrayList<HashMap<Integer,Integer>> TimerDetails;
+
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
@@ -42,35 +42,68 @@ public class ledControl extends ActionBarActivity {
         Intent newint = getIntent();
         address = newint.getStringExtra(DeviceList.EXTRA_ADDRESS); //receive the address of the bluetooth device
 
-        //view of the ledControl
-        setContentView(R.layout.activity_led_control);
-
+        //view of the AmireControl
+        setContentView(com.amire.amire.R.layout.activity_my);
+        TimerDetails = new ArrayList<HashMap<Integer, Integer>>();
         //call the widgtes
-        btnOn = (Button)findViewById(R.id.button2);
-        btnOff = (Button)findViewById(R.id.button3);
-        btnDis = (Button)findViewById(R.id.button4);
-        brightness = (SeekBar)findViewById(R.id.seekBar);
-        lumn = (TextView)findViewById(R.id.lumn);
+        btnSchedule =(Button)findViewById(com.amire.amire.R.id.buttonschedule);
+        btnNorthDoor =(Button)findViewById(com.amire.amire.R.id.North);
+        btnSouthDoor =(Button)findViewById(com.amire.amire.R.id.South);
+        btnWestDoor =(Button)findViewById(com.amire.amire.R.id.West);
+        btnEastDoor =(Button)findViewById(com.amire.amire.R.id.east);
+        btnNlight =(Button)findViewById(com.amire.amire.R.id.nlight);
+        btnSlight =(Button)findViewById(com.amire.amire.R.id.slight);
+        btnWlight =(Button)findViewById(com.amire.amire.R.id.wlight);
+        btnElight  =(Button)findViewById(com.amire.amire.R.id.elight);
+        btnDis = (Button)findViewById(com.amire.amire.R.id.buttondisconnect);
+
 
         new ConnectBT().execute(); //Call the class to connect
 
         //commands to be sent to bluetooth
-        btnOn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                turnOnLed();      //method to turn on
-            }
-        });
+        btnNorthDoor.setOnClickListener(new View.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(View v)
+                                            {
+                                                executeCommand("Nd");
+                                            }
+                                        }
 
-        btnOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                turnOffLed();   //method to turn off
-            }
-        });
+        );
+        btnSouthDoor.setOnClickListener(new View.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(View v)
+                                            {
+                                                executeCommand("Sd");
+                                            }
+                                        }
+
+        );
+        btnWestDoor.setOnClickListener(new View.OnClickListener()
+                                        {
+                                            @Override
+                                            public void onClick(View v)
+                                            {
+                                                executeCommand("Wd");
+                                            }
+                                        }
+
+        );
+        btnEastDoor.setOnClickListener(new View.OnClickListener()
+                                       {
+                                           @Override
+                                           public void onClick(View v)
+                                           {
+                                               executeCommand("Ed");
+                                           }
+                                       }
+
+        );
+
+
+
 
         btnDis.setOnClickListener(new View.OnClickListener()
         {
@@ -81,33 +114,7 @@ public class ledControl extends ActionBarActivity {
             }
         });
 
-        brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser==true)
-                {
-                    lumn.setText(String.valueOf(progress));
-                    try
-                    {
-                        btSocket.getOutputStream().write(String.valueOf(progress).getBytes());
-                    }
-                    catch (IOException e)
-                    {
 
-                    }
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
     }
 
     private void Disconnect()
@@ -125,30 +132,16 @@ public class ledControl extends ActionBarActivity {
 
     }
 
-    private void turnOffLed()
-    {
-        if (btSocket!=null)
-        {
-            try
-            {
-                btSocket.getOutputStream().write("TF".toString().getBytes());
-            }
-            catch (IOException e)
-            {
-                msg("Error");
-            }
-        }
-    }
 
-    private void turnOnLed()
+    private void executeCommand(String command)
     {
-        if (btSocket!=null)
+        if(btSocket!=null)
         {
             try
             {
-                btSocket.getOutputStream().write("TO".toString().getBytes());
+                btSocket.getOutputStream().write(command.toString().getBytes());
             }
-            catch (IOException e)
+            catch(IOException e)
             {
                 msg("Error");
             }
@@ -164,7 +157,7 @@ public class ledControl extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_led_control, menu);
+        getMenuInflater().inflate(com.amire.amire.R.menu.menu_led_control, menu);
         return true;
     }
 
@@ -176,7 +169,7 @@ public class ledControl extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == com.amire.amire.R.id.action_settings) {
             return true;
         }
 
@@ -190,7 +183,7 @@ public class ledControl extends ActionBarActivity {
         @Override
         protected void onPreExecute()
         {
-            progress = ProgressDialog.show(ledControl.this, "Connecting...", "Please wait!!!");  //show a progress dialog
+            progress = ProgressDialog.show(AmireControl.this, "Connecting...", "Please wait!!!");  //show a progress dialog
         }
 
         @Override

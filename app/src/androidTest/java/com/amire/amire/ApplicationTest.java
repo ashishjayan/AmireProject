@@ -1,4 +1,4 @@
-package com.led.led;
+package com.amire.amire;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
