@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+
+    tools:context="com.amire.amire.AmireControl"
+    android:weightSum="1">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_marginTop="10dp" android:layout_height="wrap_content" android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Amire"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/bluetooth_state"
+            android:layout_weight="0.5"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp">
+
+        <Button
+            android:id="@+id/buttonschedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Schedule"
+            android:layout_alignParentLeft="true" />
+
+        <Button
+            android:id="@+id/buttondisconnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="Disconnect"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.57"
+            android:text="Doors"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/South"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="South"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/east"
+            android:layout_toStartOf="@+id/east" />
+
+        <Button
+            android:id="@+id/North"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/West"
+            android:layout_toRightOf="@+id/West"
+            android:text="North" />
+
+        <Button
+            android:id="@+id/West"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/North"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="West" />
+
+        <Button
+            android:id="@+id/east"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="East" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Door pattern"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/wlight"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Wlight" />
+
+            <Button
+                android:id="@+id/elight"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="ELight" />
+
+            <Button
+                android:id="@+id/nlight"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Nlight"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/wlight"
+                android:layout_toEndOf="@+id/wlight" />
+
+            <Button
+                android:id="@+id/slight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slight"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/elight"
+                android:layout_toStartOf="@+id/elight" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
