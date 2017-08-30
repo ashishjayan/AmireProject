@@ -44,7 +44,7 @@ public class AmireControl extends ActionBarActivity {
 
         //view of the AmireControl
         setContentView(com.amire.amire.R.layout.activity_my);
-        TimerDetails = new ArrayList<HashMap<Integer, Integer>>();
+
         //call the widgtes
         btnSchedule =(Button)findViewById(com.amire.amire.R.id.buttonschedule);
         btnNorthDoor =(Button)findViewById(com.amire.amire.R.id.North);
@@ -66,7 +66,7 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("1");
+                                                executeCommand("Nd");
                                             }
                                         }
 
@@ -76,7 +76,7 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("2");
+                                                executeCommand("Sd");
                                             }
                                         }
 
