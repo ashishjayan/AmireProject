@@ -110,7 +110,7 @@ public class DeviceList extends ActionBarActivity
         }
     };
 
-
+///random comment dont remove. need it here.
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
