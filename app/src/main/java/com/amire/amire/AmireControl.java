@@ -66,7 +66,7 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("Nd");
+                                                executeCommand("1");
                                             }
                                         }
 
@@ -76,7 +76,7 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("Sd");
+                                                executeCommand("2");
                                             }
                                         }
 
@@ -103,7 +103,13 @@ public class AmireControl extends ActionBarActivity {
         );
 
 
-
+        btnSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent scheduleIntent = new Intent(view.getContext(),Schedule.class);
+                startActivityForResult(scheduleIntent,0);
+            }
+        });
 
         btnDis.setOnClickListener(new View.OnClickListener()
         {
