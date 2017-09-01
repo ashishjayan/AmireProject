@@ -2,11 +2,13 @@ package com.amire.amire;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -21,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
 
 
 public class Schedule extends ActionBarActivity {
@@ -70,8 +73,40 @@ public class Schedule extends ActionBarActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                routine.add(order.getText().toString());
-                order.setText("");
+                int myChannel =0;
+                        try{
+                            myChannel = Integer.parseInt(channel.getText().toString());
+                        }
+                        catch (Exception my){
+                            AlertDialog myDialog = new AlertDialog.Builder(Schedule.this).setTitle("Alert").setMessage("Invalid Input").setNeutralButton("Close",null).show();
+
+                        }
+                int myDuration = 0;
+                try{
+                    myDuration = Integer.parseInt(duration.getText().toString());
+                }
+                catch (Exception ex){
+                    AlertDialog myDialog = new AlertDialog.Builder(Schedule.this).setTitle("Alert").setMessage("Invalid Input").setNeutralButton("Close",null).show();
+                }
+
+                HashMap<Integer,Integer> myMap = new HashMap<Integer, Integer>();
+                myMap.put(myDuration,myChannel);
+                TimerDetails.add(myMap);
+
+               // routine.add(order.getText().toString()+" channel ="+channel.getText().toString()+" time="+duration.getText().toString());
+
+                for(Integer i = TimerDetails.size()-1; i< TimerDetails.size();i++){
+                    Set mySet = TimerDetails.get(i).entrySet();
+                    Iterator myIterator = mySet.iterator();
+                    while (myIterator.hasNext()){
+                        Map.Entry me = (Map.Entry) myIterator.next();
+                        routine.add(order.getText().toString()+"Duration = "+me.getKey().toString()+"Channel = "+me.getValue().toString());
+                    }
+                }
+
+                order.setHint("order");
+                channel.setHint("channel");
+                duration.setHint("time");
                 adapter.notifyDataSetChanged();
                 //Beginning of end soft keybaord
                 InputMethodManager inputManager = (InputMethodManager)
@@ -81,10 +116,43 @@ public class Schedule extends ActionBarActivity {
                         InputMethodManager.HIDE_NOT_ALWAYS);
                 //end of end soft keyboard
 
+
+
             }
         });
 
         schedulelist.setAdapter(adapter);
+
+//        schedulelist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                SparseBooleanArray positionchecker = schedulelist.getCheckedItemPositions();
+//
+//                int count = schedulelist.getCount();
+//
+////                for (int item = count - 1; item >= 0; item--) {
+////                    if (positionchecker.get(item)) {
+////                        adapter.remove(routine.get(item));
+////                    }
+//                for (int item = count-1; item>=count; item--) {
+//                    if (positionchecker.get(item)) {
+//                        adapter.remove(routine.get(item));
+//                    }
+//
+//
+//                }
+//                positionchecker.clear();
+//                adapter.notifyDataSetChanged();
+//
+//
+//
+//                return false;
+//            }
+//
+//
+//
+//          });
 
         start.setOnClickListener(new View.OnClickListener()
         {
