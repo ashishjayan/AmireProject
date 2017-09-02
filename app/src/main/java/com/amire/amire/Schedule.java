@@ -100,13 +100,16 @@ public class Schedule extends ActionBarActivity {
                     Iterator myIterator = mySet.iterator();
                     while (myIterator.hasNext()){
                         Map.Entry me = (Map.Entry) myIterator.next();
-                        routine.add(order.getText().toString()+"Duration = "+me.getKey().toString()+"Channel = "+me.getValue().toString());
+                        routine.add("Channel = "+me.getValue().toString()+"Duration = "+me.getKey().toString());
                     }
                 }
-
+                order.setText("");
+                channel.setText("");
+                duration.setText("");
                 order.setHint("order");
                 channel.setHint("channel");
                 duration.setHint("time");
+             Log.d("sd","addedd");
                 adapter.notifyDataSetChanged();
                 //Beginning of end soft keybaord
                 InputMethodManager inputManager = (InputMethodManager)
