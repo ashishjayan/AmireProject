@@ -2,6 +2,7 @@ package com.amire.amire;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,10 +17,14 @@ import android.bluetooth.BluetoothDevice;
 import android.os.AsyncTask;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
-
+import java.util.concurrent.TimeUnit;
+import  java.util.Set;
 
 public class AmireControl extends ActionBarActivity {
 
@@ -110,6 +115,30 @@ public class AmireControl extends ActionBarActivity {
                 startActivityForResult(scheduleIntent,0);
             }
         });
+
+        btnElight.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                for(Integer i = 0; i< Schedule.TimerDetails.size();i++){
+
+                    Set mySet = Schedule.TimerDetails.get(i).entrySet();
+                    Iterator myIterator = mySet.iterator();
+                    while (myIterator.hasNext()){
+                        Map.Entry me = (Map.Entry) myIterator.next();
+                        try{
+                            executeCommand(me.getValue().toString());
+                            Long value = Long.parseLong(me.getKey().toString());
+                            TimeUnit.SECONDS.sleep(value);
+                        }
+                        catch (Exception ex){
+                            Log.d("hadf","asdf");
+                        }
+                    }
+                }
+
+            }
+        }));
 
         btnDis.setOnClickListener(new View.OnClickListener()
         {
