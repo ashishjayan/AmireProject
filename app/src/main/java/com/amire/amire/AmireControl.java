@@ -106,7 +106,7 @@ public class AmireControl extends ActionBarActivity {
                                        }
 
         );
-
+//
 
         btnSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
