@@ -71,7 +71,7 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("Nd");
+                                                executeCommand("1");
                                             }
                                         }
 
@@ -81,7 +81,7 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("Sd");
+                                                executeCommand("2");
                                             }
                                         }
 
@@ -91,7 +91,7 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("Wd");
+                                                executeCommand("3");
                                             }
                                         }
 
@@ -101,7 +101,7 @@ public class AmireControl extends ActionBarActivity {
                                            @Override
                                            public void onClick(View v)
                                            {
-                                               executeCommand("Ed");
+                                               executeCommand("4");
                                            }
                                        }
 
