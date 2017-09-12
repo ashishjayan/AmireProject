@@ -23,14 +23,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import  java.util.Set;
+import java.util.TimerTask;
+import java.util.Timer;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class AmireControl extends ActionBarActivity {
 
     Button btnDis,btnNorthDoor, btnSouthDoor, btnWestDoor, btnEastDoor,btnSchedule, btnNlight,btnSlight,btnWlight,btnElight;
     public static ArrayList<HashMap<Integer,Integer>> TimerDetails;
-
+    private final ScheduledExecutorService scheduler =  Executors.newScheduledThreadPool(1);
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
@@ -71,7 +75,11 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("1");
+                                                try {
+                                                    executeCommand("1");
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         }
 
@@ -81,7 +89,11 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("2");
+                                                try {
+                                                    executeCommand("2");
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         }
 
@@ -91,7 +103,11 @@ public class AmireControl extends ActionBarActivity {
                                             @Override
                                             public void onClick(View v)
                                             {
-                                                executeCommand("3");
+                                                try {
+                                                    executeCommand("3");
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
                                             }
                                         }
 
@@ -101,7 +117,11 @@ public class AmireControl extends ActionBarActivity {
                                            @Override
                                            public void onClick(View v)
                                            {
-                                               executeCommand("4");
+                                               try {
+                                                   executeCommand("4");
+                                               } catch (IOException e) {
+                                                   e.printStackTrace();
+                                               }
                                            }
                                        }
 
@@ -127,9 +147,19 @@ public class AmireControl extends ActionBarActivity {
                     while (myIterator.hasNext()){
                         Map.Entry me = (Map.Entry) myIterator.next();
                         try{
-                            executeCommand(me.getValue().toString());
+
+
+
+
+
                             Long value = Long.parseLong(me.getKey().toString());
-                            TimeUnit.SECONDS.sleep(value);
+                           // TimeUnit.SECONDS.sleep(value);
+                            executeCommand(me.getValue().toString());
+
+                                Thread.sleep(value*1000);
+                            btSocket.getOutputStream().flush();
+
+                            executeCommand(me.getValue().toString());
                         }
                         catch (Exception ex){
                             Log.d("hadf","asdf");
@@ -152,6 +182,8 @@ public class AmireControl extends ActionBarActivity {
 
     }
 
+
+
     private void Disconnect()
     {
         if (btSocket!=null) //If the btSocket is busy
@@ -168,19 +200,20 @@ public class AmireControl extends ActionBarActivity {
     }
 
 
-    private void executeCommand(String command)
-    {
-        if(btSocket!=null)
-        {
-            try
-            {
-                btSocket.getOutputStream().write(command.toString().getBytes());
-            }
-            catch(IOException e)
-            {
-                msg("Error");
-            }
-        }
+    private void executeCommand(String command) throws IOException {
+        btSocket.getOutputStream().write(command.toString().getBytes());
+
+//        if(btSocket!=null)
+//        {
+//            try
+//            {
+//                btSocket.getOutputStream().write(command.toString().getBytes());
+//            }
+//            catch(IOException e)
+//            {
+//                msg("Error");
+//            }
+//        }
     }
 
     // fast way to call Toast
@@ -258,5 +291,7 @@ public class AmireControl extends ActionBarActivity {
             }
             progress.dismiss();
         }
+
     }
+
 }

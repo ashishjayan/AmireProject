@@ -16,6 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.NumberPicker;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +34,11 @@ public class Schedule extends ActionBarActivity {
 
     ListView schedulelist;
     ArrayAdapter<String> adapter;
-    EditText order, channel, duration;
+    EditText  duration;
+    String channel;
+    Spinner spinner;
+    NumberPicker scrollwheel;
+    ArrayAdapter<CharSequence> channeladapter;
     Button add, start;
     ArrayList<String> routine;
     public static ArrayList<HashMap<Integer,Integer>> TimerDetails;
@@ -42,11 +49,32 @@ public class Schedule extends ActionBarActivity {
         add = (Button) findViewById(R.id.addbutton);
         start=(Button) findViewById(R.id.Continue);
         schedulelist = (ListView) findViewById(R.id.routine);
-        order = (EditText)findViewById(R.id.order);
-        channel = (EditText)findViewById(R.id.channelnumber);
+//        order = (EditText)findViewById(R.id.order);
+        spinner= (Spinner) findViewById(R.id.channelnumber);
+        //channel = (EditText)findViewById(R.id.channelnumber);
+        channeladapter=ArrayAdapter.createFromResource(this,R.array.channels,android.R.layout.simple_spinner_item);
+        channeladapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(channeladapter);
         duration = (EditText)findViewById(R.id.duration);
         routine = new ArrayList<String>();
+        scrollwheel= (NumberPicker) findViewById(R.id.numberPicker);
+        scrollwheel.setMinValue(1);
+        scrollwheel.setMaxValue(60);
 
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                channel= (String) parent.getItemAtPosition(position);
+                Toast.makeText(getBaseContext(), (CharSequence) channel,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         adapter= new ArrayAdapter<String>(Schedule.this,android.R.layout.simple_list_item_multiple_choice,routine);
         TimerDetails = new ArrayList<HashMap<Integer, Integer>>();
 
@@ -72,25 +100,38 @@ public class Schedule extends ActionBarActivity {
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
+            public String toString() {
+                return "$classname{}";
+            }
+
+            @Override
             public void onClick(View view) {
                 int myChannel =0;
+//                if(channel== "Bright") {
+//                    Toast.makeText(getBaseContext(), channel,
+//                            Toast.LENGTH_SHORT).show();
+//                    myChannel = 1;
+//                }
+//                else if(channel=="Dark")
+//                    myChannel=2;
+//                else if (channel=="Food")
+//                    myChannel=3;
+//                else if(channel=="Water")
+//                    myChannel=4;
                         try{
-                            myChannel = Integer.parseInt(channel.getText().toString());
+
+                            myChannel = Integer.parseInt(channel);
                         }
                         catch (Exception my){
                             AlertDialog myDialog = new AlertDialog.Builder(Schedule.this).setTitle("Alert").setMessage("Invalid Input").setNeutralButton("Close",null).show();
 
                         }
-                int myDuration = 0;
-                try{
-                    myDuration = Integer.parseInt(duration.getText().toString());
-                }
-                catch (Exception ex){
-                    AlertDialog myDialog = new AlertDialog.Builder(Schedule.this).setTitle("Alert").setMessage("Invalid Input").setNeutralButton("Close",null).show();
-                }
+
 
                 HashMap<Integer,Integer> myMap = new HashMap<Integer, Integer>();
-                myMap.put(myDuration,myChannel);
+                //myMap.put(2,myChannel);
+                myMap.put(scrollwheel.getValue(),myChannel);
+
                 TimerDetails.add(myMap);
 
                // routine.add(order.getText().toString()+" channel ="+channel.getText().toString()+" time="+duration.getText().toString());
@@ -103,11 +144,12 @@ public class Schedule extends ActionBarActivity {
                         routine.add("Channel = "+me.getValue().toString()+"Duration = "+me.getKey().toString());
                     }
                 }
-                order.setText("");
-                channel.setText("");
+//                order.setText("");
+               //channel.setText("");
                 duration.setText("");
-                order.setHint("order");
-                channel.setHint("channel");
+                scrollwheel.setValue(1);
+//                order.setHint("order");
+              //  channel.setHint("channel");
                 duration.setHint("time");
              Log.d("sd","addedd");
                 adapter.notifyDataSetChanged();

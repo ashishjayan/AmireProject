@@ -19,28 +19,35 @@
             android:id="@+id/duration"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:layout_toStartOf="@+id/numberPicker"
+            android:layout_alignParentTop="true" />
 
-        <EditText
-            android:id="@+id/order"
-            android:layout_width="100dp"
+        <Spinner
+
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-        <EditText
             android:id="@+id/channelnumber"
-            android:layout_width="100dp"
+            android:entries="@array/channels"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/duration"
+            android:layout_alignBottom="@+id/duration"></Spinner>
+
+        <NumberPicker
+            android:id="@+id/numberPicker"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:layout_below="@+id/numberPicker"
+            android:layout_alignParentEnd="true" />
+        <!--<EditText-->
+        <!--android:id="@+id/channelnumber"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:ems="10"-->
+        <!--android:inputType="textPersonName"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_toStartOf="@+id/duration" />-->
     </RelativeLayout>
 
     <RelativeLayout
