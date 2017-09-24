@@ -28,6 +28,8 @@ public class DeviceList extends ActionBarActivity
     private BluetoothAdapter myBluetooth = null;
     private Set<BluetoothDevice> pairedDevices;
     public static String EXTRA_ADDRESS = "device_address";
+//
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -102,10 +104,10 @@ public class DeviceList extends ActionBarActivity
             String address = info.substring(info.length() - 17);
 
             // Make an intent to start next activity.
-            Intent i = new Intent(DeviceList.this, AmireControl.class);
+            Intent i = new Intent(DeviceList.this, MainActivity.class);
 
             //Change the activity.
-            i.putExtra(EXTRA_ADDRESS, address); //this will be received at AmireControl (class) Activity
+            i.putExtra(EXTRA_ADDRESS, address); //this will be received at  (class) Activity
             startActivity(i);
         }
     };

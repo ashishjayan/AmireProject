@@ -34,7 +34,7 @@ public class Schedule extends ActionBarActivity {
 
     ListView schedulelist;
     ArrayAdapter<String> adapter;
-    EditText  duration;
+   // EditText  duration;
     String channel;
     Spinner spinner;
     NumberPicker scrollwheel;
@@ -55,7 +55,7 @@ public class Schedule extends ActionBarActivity {
         channeladapter=ArrayAdapter.createFromResource(this,R.array.channels,android.R.layout.simple_spinner_item);
         channeladapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(channeladapter);
-        duration = (EditText)findViewById(R.id.duration);
+        //duration = (EditText)findViewById(R.id.duration);
         routine = new ArrayList<String>();
         scrollwheel= (NumberPicker) findViewById(R.id.numberPicker);
         scrollwheel.setMinValue(1);
@@ -146,11 +146,11 @@ public class Schedule extends ActionBarActivity {
                 }
 //                order.setText("");
                //channel.setText("");
-                duration.setText("");
+              //  duration.setText("");
                 scrollwheel.setValue(1);
 //                order.setHint("order");
               //  channel.setHint("channel");
-                duration.setHint("time");
+         //       duration.setHint("time");
              Log.d("sd","addedd");
                 adapter.notifyDataSetChanged();
                 //Beginning of end soft keybaord

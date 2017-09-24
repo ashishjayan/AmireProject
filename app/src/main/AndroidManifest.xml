@@ -20,16 +20,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amire.amire.AmireControl"
-            android:label="Amire Control" >
-        </activity>
-        <activity
             android:name="com.amire.amire.DeviceList"
             android:label="Device List" >
         </activity>
         <activity
-            android:name="com.amire.amire.Settings"
-            android:label="settings" >
+            android:name="com.amire.amire.MainActivity"
+            android:label="Device List" >
         </activity>
     </application>
 
