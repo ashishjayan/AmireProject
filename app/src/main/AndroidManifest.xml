@@ -12,7 +12,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.amire.amire.Schedule"
-            android:label="Amire" >
+            android:label="Amire"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,11 +23,15 @@
         </activity>
         <activity
             android:name="com.amire.amire.DeviceList"
-            android:label="Device List" >
+            android:label="Device List"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.amire.amire.MainActivity"
-            android:label="Device List" >
+            android:label="Device List"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

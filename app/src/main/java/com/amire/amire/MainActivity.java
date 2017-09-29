@@ -19,6 +19,7 @@ import android.widget.ToggleButton;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -30,11 +31,13 @@ import java.util.TimerTask;
 public class MainActivity extends ActionBarActivity {
 
     // private final String DEVICE_ADDRESS="00:14:03:06:2D:7C";
-    String DEVICE_ADDRESS;
 
+    String DEVICE_ADDRESS;
+    public String recieveText;
     Timer timer;
     public long grandTimerexecutor;
     public int routinOrder;
+    public long temp;
     final String [] answer= new String[1];
     public int testArray[];
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");//Serial Port Service ID
@@ -115,6 +118,8 @@ public class MainActivity extends ActionBarActivity {
                                            public void onClick(View v) {
                                                try {
                                                    executeCommand("4");
+
+
                                                } catch (IOException e) {
                                                    e.printStackTrace();
                                                }
@@ -221,6 +226,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
 
+
         return connected;
     }
 
@@ -231,33 +237,70 @@ public class MainActivity extends ActionBarActivity {
 
     public void startRoutine(View view) {
 
+    new CountDownTimer(90000,1000)
+    {
 
-            while (routinOrder < Schedule.TimerDetails.size()) {
-
-                    Set mySet = Schedule.TimerDetails.get(routinOrder).entrySet();
-                    Iterator myIterator = mySet.iterator();
-                    while (myIterator.hasNext()) {
-                        Map.Entry me = (Map.Entry) myIterator.next();
-                        try {
-                            grandTimerexecutor = Long.parseLong(me.getKey().toString());
-
-
-                            //OPENS DOOR
-                            executeCommand(me.getValue().toString());
-                            Thread.sleep(grandTimerexecutor * 1000);
-                            textView.setText(inputStream.toString());
-                            // (new Handler()).postDelayed(this::yourMethod, grandTimerexecutor);
-
-                           // if(inputStream.read()==20)
+        public void onTick(long millisUntilFinished) {
 
 
 
-                        } catch (Exception ex) {
-                            Log.d("hadf", "asdf");
-                        }
-                    }
-                    routinOrder++;
-                }
+            int command=Integer.parseInt(recieveText);
+
+            if(command==999 || command==99 || command== 9)
+            {
+                pause();
+
+                textView.append("seconds remaining: " + millisUntilFinished / 1000);
+
+            }
+            else if(command==888 || command== 88 || command==8) {
+                resume();
+
+                textView.append("seconds remaining: " + millisUntilFinished / 1000);
+
+                textView.append("resumed");
+            }
+
+        }
+
+        public void onFinish() {
+            textView.append("done!");
+        }
+
+
+
+    }.start();
+
+
+
+
+
+//            while (routinOrder < Schedule.TimerDetails.size()) {
+//
+//                    Set mySet = Schedule.TimerDetails.get(routinOrder).entrySet();
+//                    Iterator myIterator = mySet.iterator();
+//                    while (myIterator.hasNext()) {
+//                        Map.Entry me = (Map.Entry) myIterator.next();
+//                        try {
+//                            grandTimerexecutor = Long.parseLong(me.getKey().toString());
+//
+//
+//                            //OPENS DOOR
+//                            executeCommand(me.getValue().toString());
+//                            Thread.sleep(grandTimerexecutor * 1000);
+//                            textView.setText(inputStream.toString());
+//                            // (new Handler()).postDelayed(this::yourMethod, grandTimerexecutor);
+//
+//                           // if(inputStream.read()==20)
+//
+//
+//
+//                        } catch (Exception ex) {
+//                            Log.d("hadf", "asdf");
+//                        }
+//                    }
+//                    routinOrder++;
+//                }
             }
 
 
@@ -265,49 +308,117 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-
-
-
-
-    public void beginListenForData() {
+    public void beginListenForData()
+    {
         final Handler handler = new Handler();
         stopThread = false;
         buffer = new byte[1024];
         Thread thread = new Thread(new Runnable() {
+            int bytes;
+
             public void run() {
                 while (!Thread.currentThread().isInterrupted() && !stopThread) {
                     try {
-                        int byteCount = inputStream.available();
-                        if (byteCount > 0) {
-                            byte[] rawBytes = new byte[byteCount];
-                            inputStream.read(rawBytes);
-
-
-                            final String string = new String(rawBytes, "UTF-8");
-                            if(string=="") {
-                                hiddentexts.setText(string);
-                            }
-
+                        byte[] buffer = new byte[128];
+                        Arrays.fill(buffer, (byte)0x00);
+                        bytes = inputStream.read(buffer);
+                        if(bytes>0){
+                            final String string = new String(buffer);
                             handler.post(new Runnable() {
                                 public void run() {
+                                    if (string != "")
+                                    {
+
+                                        recieveText=string.toString();
+                                        recieveText = recieveText.trim();
+                                        recieveText = recieveText.replaceAll("^\"|\"$", "");
+
+
+                                    }
 
 
 
                                     textView.append(string);
                                 }
                             });
-
                         }
+
+//                        int byteCount = inputStream.available();
+//                        if (byteCount > 0) {
+//                            byte[] rawBytes = new byte[byteCount];
+//                            inputStream.read(rawBytes);
+//
+//                            final String string = new String(rawBytes, "UTF-8");
+
+//                            char [] myArray = new char[3];
+//                            myArray = string.toCharArray();
+//                           String mystring = new String();
+//                            for(int i = 0; i < 3;i++){
+//                                mystring += myArray[i];
+//                            }
+                            //  Log.d("String is ",mystring);
+
+
+
+
 
                     } catch (IOException ex) {
                         stopThread = true;
                     }
                 }
+
             }
         });
 
         thread.start();
     }
+
+//
+//    public void beginListenForData() {
+//        final Handler handler = new Handler();
+//        stopThread = false;
+//        buffer = new byte[1024];
+//        Thread thread = new Thread(new Runnable() {
+//            public void run() {
+//                while (!Thread.currentThread().isInterrupted() && !stopThread) {
+//                    try {
+//
+//                        int byteCount = inputStream.available();
+//                        if (byteCount > 0) {
+//                            byte[] rawBytes = new byte[byteCount];
+//                            inputStream.read(rawBytes);
+//
+//                            final String string = new String(rawBytes, "UTF-8");
+//
+////                            char [] myArray = new char[3];
+////                            myArray = string.toCharArray();
+////                           String mystring = new String();
+////                            for(int i = 0; i < 3;i++){
+////                                mystring += myArray[i];
+////                            }
+//                        //  Log.d("String is ",mystring);
+//
+//                            handler.post(new Runnable() {
+//                                public void run() {
+//                                    if (string != "")
+//                                   recieveText=string.toString();
+//
+//                                    textView.append(string);
+//                                }
+//                            });
+//
+//                        }
+//
+//                    } catch (IOException ex) {
+//                        stopThread = true;
+//                    }
+//                }
+//
+//            }
+//        });
+//
+//        thread.start();
+//    }
 
     private void executeCommand(String command) throws IOException {
         command.concat("\n");
