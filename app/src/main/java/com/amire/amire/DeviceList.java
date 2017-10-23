@@ -49,7 +49,7 @@ public class DeviceList extends ActionBarActivity
             //Show a mensag. that the device has no bluetooth adapter
             Toast.makeText(getApplicationContext(), "Bluetooth Device Not Available", Toast.LENGTH_LONG).show();
 
-            //finish apk
+            //finishCheck apk
             finish();
         }
         else if(!myBluetooth.isEnabled())
