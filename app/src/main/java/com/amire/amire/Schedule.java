@@ -168,36 +168,7 @@ public class Schedule extends ActionBarActivity {
 
         schedulelist.setAdapter(adapter);
 
-//        schedulelist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                SparseBooleanArray positionchecker = schedulelist.getCheckedItemPositions();
-//
-//                int count = schedulelist.getCount();
-//
-////                for (int item = count - 1; item >= 0; item--) {
-////                    if (positionchecker.get(item)) {
-////                        adapter.remove(routine.get(item));
-////                    }
-//                for (int item = count-1; item>=count; item--) {
-//                    if (positionchecker.get(item)) {
-//                        adapter.remove(routine.get(item));
-//                    }
-//
-//
-//                }
-//                positionchecker.clear();
-//                adapter.notifyDataSetChanged();
-//
-//
-//
-//                return false;
-//            }
-//
-//
-//
-//          });
+
 
         start.setOnClickListener(new View.OnClickListener()
         {

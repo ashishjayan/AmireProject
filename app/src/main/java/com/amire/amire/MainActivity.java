@@ -1,5 +1,7 @@
 package com.amire.amire;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -7,9 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +29,7 @@ import java.util.UUID;
 import java.util.Timer;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener{
 
     private Button btnServiceStart;
     private Button btnServiceStop;
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CountDownTimerService countDownTimerService;
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler(){
 
         @Override
