@@ -42,34 +42,34 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 
 
-    private CountDownTimerService countDownTimerService;
-
-
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler(){
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-
-                case 2:
-                    tvServiceTime.setText(formateTimer(countDownTimerService.getCountingTime()));
-                    if(countDownTimerService.getTimerStatus()==CountDownTimerUtil.PREPARE){
-                        btnServiceStart.setText("START");
-                    }
-                    break;
-            }
-        }
-    };
-
-    private class MyCountDownLisener implements CountDownTimerListeners {
-
-        @Override
-        public void onChange() {
-            mHandler.sendEmptyMessage(2);
-        }
-    }
+//    private CountDownTimerService countDownTimerService;
+//
+//
+//    @SuppressLint("HandlerLeak")
+//    private Handler mHandler = new Handler(){
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.what){
+//
+//                case 2:
+//                    tvServiceTime.setText(formateTimer(countDownTimerService.getCountingTime()));
+//                    if(countDownTimerService.getTimerStatus()==CountDownTimerUtil.PREPARE){
+//                        btnServiceStart.setText("START");
+//                    }
+//                    break;
+//            }
+//        }
+//    };
+//
+//    private class MyCountDownLisener implements CountDownTimerListeners {
+//
+//        @Override
+//        public void onChange() {
+//            mHandler.sendEmptyMessage(2);
+//        }
+//    }
 
 
 
@@ -118,10 +118,12 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btnServiceStart.setOnClickListener(this);
         btnServiceStop.setOnClickListener(this);
 
-//Mdestinationtotal = 200000 3 minutes 20 seconds.
-        countDownTimerService = CountDownTimerService.getInstance(new MyCountDownLisener()
-                ,service_distination_total);
-        initServiceCountDownTimerStatus();
+//Mdestinationtotal = 200000 3 minutes 20 seconds. come back to this later maybe
+//        countDownTimerService = CountDownTimerService.getInstance(new MyCountDownLisener()
+//                ,service_distination_total);
+
+        //modifying ashish come check this out later- dont remove because I can use it later :)
+     //   initServiceCountDownTimerStatus();
 
 
 
@@ -343,6 +345,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         return connected;
     }
+    public void onClickClear(View view) {
+        textView.setText("");
+    }
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -386,99 +391,98 @@ public void runSimulation()
 
 
 
+//
+//
+//
+//
+//
+//
+//
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()){
+//
+//            case R.id.btn_start2:
+//                switch (countDownTimerService.getTimerStatus()){
+//
+//                    case CountDownTimerUtil.PREPARE:
+//                        //Start timer
+//                        countDownTimerService.startCountDown();
+//                        btnServiceStart.setText("PAUSE");
+//                        break;
+//                    case CountDownTimerUtil.START:
+//                        //pause countdown
+//                        countDownTimerService.pauseCountDown();
+//                        btnServiceStart.setText("RESUME");
+//                        break;
+//                    case CountDownTimerUtil.PASUSE:
+//                        //continue timer
+//                        countDownTimerService.startCountDown();
+//                        btnServiceStart.setText("PAUSE");
+//                        break;
+//                }
+//                break;
+//            case R.id.btn_stop2:
+//                //stop timer and cancel it
+//                btnServiceStart.setText("START");
+//                countDownTimerService.stopCountDown();
+//                break;
+//        }
+//    }
+//
+//
+//
+//    /**
+//     * formate timer shown in textview
+//     * @param time
+//     * @return
+//     */
+//    private String formateTimer(long time){
+//        String str = "00:00:00";
+//        int hour = 0;
+//        if(time>=1000*3600){
+//            hour = (int)(time/(1000*3600));
+//            time -= hour*1000*3600;
+//        }
+//        int minute = 0;
+//        if(time>=1000*60){
+//            minute = (int)(time/(1000*60));
+//            time -= minute*1000*60;
+//        }
+//        int sec = (int)(time/1000);
+//        str = formateNumber(hour)+":"+formateNumber(minute)+":"+formateNumber(sec);
+//        return str;
+//    }
+//
+//    /**
+//     * formate time number with two numbers auto add 0
+//     * @param time
+//     * @return
+//     */
+//    private String formateNumber(int time){
+//        return String.format("%02d", time);
+//    }
+//
+//
+//
+//
+//    /**
+//     * init countdowntimer buttons status for servce
+//     */
+//    private void initServiceCountDownTimerStatus(){
+//        switch (countDownTimerService.getTimerStatus()) {
+//            case CountDownTimerUtil.PREPARE:
+//                btnServiceStart.setText("START");
+//                break;
+//            case CountDownTimerUtil.START:
+//                btnServiceStart.setText("PAUSE");
+//                break;
+//            case CountDownTimerUtil.PASUSE:
+//                btnServiceStart.setText("RESUME");
+//                break;
+//        }
+//        tvServiceTime.setText(formateTimer(countDownTimerService.getCountingTime()));
+//
+//    }
 
-
-
-
-
-    public void onClickClear(View view) {
-        textView.setText("");
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-
-            case R.id.btn_start2:
-                switch (countDownTimerService.getTimerStatus()){
-
-                    case CountDownTimerUtil.PREPARE:
-                        //Start timer
-                        countDownTimerService.startCountDown();
-                        btnServiceStart.setText("PAUSE");
-                        break;
-                    case CountDownTimerUtil.START:
-                        //pause countdown
-                        countDownTimerService.pauseCountDown();
-                        btnServiceStart.setText("RESUME");
-                        break;
-                    case CountDownTimerUtil.PASUSE:
-                        //continue timer
-                        countDownTimerService.startCountDown();
-                        btnServiceStart.setText("PAUSE");
-                        break;
-                }
-                break;
-            case R.id.btn_stop2:
-                //stop timer and cancel it
-                btnServiceStart.setText("START");
-                countDownTimerService.stopCountDown();
-                break;
-        }
-    }
-
-
-
-    /**
-     * formate timer shown in textview
-     * @param time
-     * @return
-     */
-    private String formateTimer(long time){
-        String str = "00:00:00";
-        int hour = 0;
-        if(time>=1000*3600){
-            hour = (int)(time/(1000*3600));
-            time -= hour*1000*3600;
-        }
-        int minute = 0;
-        if(time>=1000*60){
-            minute = (int)(time/(1000*60));
-            time -= minute*1000*60;
-        }
-        int sec = (int)(time/1000);
-        str = formateNumber(hour)+":"+formateNumber(minute)+":"+formateNumber(sec);
-        return str;
-    }
-
-    /**
-     * formate time number with two numbers auto add 0
-     * @param time
-     * @return
-     */
-    private String formateNumber(int time){
-        return String.format("%02d", time);
-    }
-
-
-
-
-    /**
-     * init countdowntimer buttons status for servce
-     */
-    private void initServiceCountDownTimerStatus(){
-        switch (countDownTimerService.getTimerStatus()) {
-            case CountDownTimerUtil.PREPARE:
-                btnServiceStart.setText("START");
-                break;
-            case CountDownTimerUtil.START:
-                btnServiceStart.setText("PAUSE");
-                break;
-            case CountDownTimerUtil.PASUSE:
-                btnServiceStart.setText("RESUME");
-                break;
-        }
-        tvServiceTime.setText(formateTimer(countDownTimerService.getCountingTime()));
-
-    }
 }
