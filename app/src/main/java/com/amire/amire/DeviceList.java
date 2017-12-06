@@ -1,6 +1,8 @@
 package com.amire.amire;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +33,7 @@ public class DeviceList extends ActionBarActivity
 //
 
 
+    @TargetApi(Build.VERSION_CODES.ECLAIR)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
