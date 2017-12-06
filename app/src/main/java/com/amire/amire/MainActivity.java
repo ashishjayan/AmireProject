@@ -263,64 +263,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
         return found;
     }
 
-    public boolean BTconnect() {
-        boolean connected = true;
+    private void executeCommand(String command) throws IOException {
+        command.concat("\n");
         try {
-            socket = device.createRfcommSocketToServiceRecord(PORT_UUID);
-            socket.connect();
+            outputStream.write(command.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
-            connected = false;
         }
-        if (connected) {
-            try {
-                outputStream = socket.getOutputStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                inputStream = socket.getInputStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-
-        return connected;
+        textView.append("\nCommand:" + command + "\n");
     }
-
-public void runSimulation()
-{
-
-    Set mySet = Schedule.TimerDetails.get(routinOrder).entrySet();
-    Iterator myIterator = mySet.iterator();
-    Log.d("simbeforeroutine", Integer.toString(routinOrder));
-    while (myIterator.hasNext()) {
-        Map.Entry me = (Map.Entry) myIterator.next();
-       final Map.Entry ender=me;
-        try {
-            grandTimerexecutor = Long.parseLong(me.getKey().toString());
-
-
-            //OPENS DOOR
-            executeCommand(me.getValue().toString());
-            executeCommand(ender.getValue().toString());
-
-
-
-
-        } catch (Exception ex) {
-            Log.d("hadf", "asdf");
-        }
-
-    }
-
-
-}
-
-
-
 
     public void beginListenForData() {
         final Handler handler = new Handler();
@@ -365,15 +316,79 @@ public void runSimulation()
     }
 
 
-    private void executeCommand(String command) throws IOException {
-        command.concat("\n");
+    ///////////////////////////////DONT WORRY ABOUT THIS AT ALL
+    public boolean BTconnect() {
+        boolean connected = true;
         try {
-            outputStream.write(command.getBytes());
+            socket = device.createRfcommSocketToServiceRecord(PORT_UUID);
+            socket.connect();
         } catch (IOException e) {
             e.printStackTrace();
+            connected = false;
         }
-        textView.append("\nCommand:" + command + "\n");
+        if (connected) {
+            try {
+                outputStream = socket.getOutputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                inputStream = socket.getInputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+        return connected;
     }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////TOP PART IS GOOD, FIX BOTTOM///////////////////////?????????????????????????
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+public void runSimulation()
+{
+
+    Set mySet = Schedule.TimerDetails.get(routinOrder).entrySet();
+    Iterator myIterator = mySet.iterator();
+    Log.d("Start Routine", Integer.toString(routinOrder));
+    while (myIterator.hasNext()) {
+        Map.Entry me = (Map.Entry) myIterator.next();
+       final Map.Entry ender=me;
+        try {
+            grandTimerexecutor = Long.parseLong(me.getKey().toString());
+
+
+            //OPENS DOOR
+            executeCommand(me.getValue().toString());
+            executeCommand(ender.getValue().toString());
+
+
+
+
+        } catch (Exception ex) {
+            Log.d("hadf", "asdf");
+        }
+
+    }
+
+
+}
+
+
+
+
+
+
+
 
 
     public void onClickClear(View view) {
@@ -386,21 +401,26 @@ public void runSimulation()
 
             case R.id.btn_start2:
                 switch (countDownTimerService.getTimerStatus()){
+
                     case CountDownTimerUtil.PREPARE:
+                        //Start timer
                         countDownTimerService.startCountDown();
                         btnServiceStart.setText("PAUSE");
                         break;
                     case CountDownTimerUtil.START:
+                        //pause countdown
                         countDownTimerService.pauseCountDown();
                         btnServiceStart.setText("RESUME");
                         break;
                     case CountDownTimerUtil.PASUSE:
+                        //continue timer
                         countDownTimerService.startCountDown();
                         btnServiceStart.setText("PAUSE");
                         break;
                 }
                 break;
             case R.id.btn_stop2:
+                //stop timer and cancel it
                 btnServiceStart.setText("START");
                 countDownTimerService.stopCountDown();
                 break;

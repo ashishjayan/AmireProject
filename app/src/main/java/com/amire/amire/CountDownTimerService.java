@@ -109,7 +109,7 @@ public class CountDownTimerService extends Service {
         @Override
         public void run() {
             timer_couting -=timer_unit;
-            Log.d("timmer", timer_couting + "");
+            Log.d("timer", timer_couting + "");
             mCountDownTimerListener.onChange();
             if(timer_couting==0){
                 cancel();
